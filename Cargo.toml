@@ -60,8 +60,8 @@ log-level-debug = ["axfeat/log-level-debug"]
 log-level-trace = ["axfeat/log-level-trace"]
 
 [dependencies]
-linux_syscall_api = { path = "../../api/linux_syscall_api" }
-axfeat = { path = "../../api/axfeat" }
-axlibc = { path = "../axlibc", optional = true }
-axlog = { path = "../../modules/axlog" }
-arch_boot = { path = "../../entry/arch_boot" }
+linux_syscall_api = { git = "https://github.com/Starry-OS/linux_syscall_api.git" }
+axfeat = { git = "https://github.com/Starry-OS/axfeat.git" }
+axlibc = { git = "https://github.com/Starry-OS/axlibc.git", optional = true }
+axlog = { git = "https://github.com/Starry-OS/axlog.git" }
+arch_boot = { git = "https://github.com/Starry-OS/arch_boot.git" }
