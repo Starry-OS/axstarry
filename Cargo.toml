@@ -44,7 +44,7 @@ bus-pci = ["axfeat/bus-pci"]
 # Fs
 fs = ["axfeat/fs"]
 fatfs = ["axfeat/fatfs"]
-ext4fs = ["axfeat/ext4fs", "axlibc/fs"]
+ext4fs = ["axfeat/ext4fs"]
 myfs = ["axfeat/myfs"]
 devfs = []
 
@@ -62,6 +62,5 @@ log-level-trace = ["axfeat/log-level-trace"]
 [dependencies]
 linux_syscall_api = { git = "https://github.com/Starry-OS/linux_syscall_api.git" }
 axfeat = { git = "https://github.com/Starry-OS/axfeat.git" }
-axlibc = { git = "https://github.com/Starry-OS/axlibc.git", optional = true }
 axlog = { git = "https://github.com/Starry-OS/axlog.git" }
 arch_boot = { git = "https://github.com/Starry-OS/arch_boot.git" }
