@@ -10,20 +10,20 @@ description = "ArceOS user program library for linux apps with posix_syscall"
 [features]
 default = ["monolithic"]
 
-monolithic = ["axfeat/monolithic", "paging", "fs", "multitask", "irq", "net"]
+monolithic = ["arch_boot/monolithic", "axfeat/monolithic", "paging", "fs", "multitask", "irq", "net"]
 
 alloc = ["axfeat/alloc"]
 
 img = ["axfeat/img"]
 
 # Multicore
-smp = ["axfeat/smp"]
+smp = ["axfeat/smp", "arch_boot/smp"]
 
 # Floating point/SIMD
-fp_simd = ["axfeat/fp_simd"]
+fp_simd = ["axfeat/fp_simd", "arch_boot/fp_simd"]
 
 # Interrupts
-irq = ["axfeat/irq"]
+irq = ["axfeat/irq", "arch_boot/irq"]
 
 # Memory
 paging = ["axfeat/paging"]
@@ -32,8 +32,8 @@ tls = ["axfeat/tls"]
 # Multi-threading and scheduler
 multitask = ["axfeat/multitask"]
 sched_fifo = ["axfeat/sched_fifo"]
-sched_rr = ["axfeat/sched_rr"]
-sched_cfs = ["axfeat/sched_cfs"]
+sched_rr = ["axfeat/sched_rr", "arch_boot/preempt"]
+sched_cfs = ["axfeat/sched_cfs", "arch_boot/preempt"]
 
 # Display
 display = ["axfeat/display"]
