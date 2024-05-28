@@ -2,6 +2,7 @@
 name = "axstarry"
 version = "0.1.0"
 edition = "2021"
+keywords = ["Starry"]
 
 authors = ["Youjie Zheng <zyj578335934@gmail.com>"]
 description = "ArceOS user program library for linux apps with posix_syscall"
