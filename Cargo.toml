@@ -45,7 +45,8 @@ bus-pci = ["axfeat/bus-pci"]
 # Fs
 fs = ["axfeat/fs"]
 fatfs = ["axfeat/fatfs"]
-ext4fs = ["axfeat/ext4fs"]
+lwext4_rust = ["axfeat/lwext4_rust"]
+ext4_rs = ["axfeat/ext4_rs"]
 myfs = ["axfeat/myfs"]
 devfs = []
 
