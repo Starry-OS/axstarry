@@ -3,6 +3,64 @@
 use alloc::{format, string::ToString};
 use linux_syscall_api::{create_link, new_file, FileFlags, FilePath};
 
+fn meminfo() -> &'static str {
+    "MemTotal:       32246488 kB
+MemFree:         5239804 kB
+MemAvailable:   10106000 kB
+Buffers:          235604 kB
+Cached:          5204940 kB
+SwapCached:            0 kB
+Active:         17890456 kB
+Inactive:        2119348 kB
+Active(anon):   14891328 kB
+Inactive(anon):        0 kB
+Active(file):    2999128 kB
+Inactive(file):  2119348 kB
+Unevictable:         144 kB
+Mlocked:             144 kB
+SwapTotal:       8388604 kB
+SwapFree:        8388604 kB
+Zswap:                 0 kB
+Zswapped:              0 kB
+Dirty:               784 kB
+Writeback:             0 kB
+AnonPages:      14560300 kB
+Mapped:          2108592 kB
+Shmem:            323608 kB
+KReclaimable:     205804 kB
+Slab:            1539752 kB
+SReclaimable:     205804 kB
+SUnreclaim:      1333948 kB
+KernelStack:      630704 kB
+PageTables:      2007248 kB
+SecPageTables:         0 kB
+NFS_Unstable:          0 kB
+Bounce:                0 kB
+WritebackTmp:          0 kB
+CommitLimit:    24511848 kB
+Committed_AS:   42466972 kB
+VmallocTotal:   34359738367 kB
+VmallocUsed:      762644 kB
+VmallocChunk:          0 kB
+Percpu:            35776 kB
+HardwareCorrupted:     0 kB
+AnonHugePages:     79872 kB
+ShmemHugePages:        0 kB
+ShmemPmdMapped:        0 kB
+FileHugePages:         0 kB
+FilePmdMapped:         0 kB
+Unaccepted:            0 kB
+HugePages_Total:       0
+HugePages_Free:        0
+HugePages_Rsvd:        0
+HugePages_Surp:        0
+Hugepagesize:       2048 kB
+Hugetlb:               0 kB
+DirectMap4k:     6500036 kB
+DirectMap2M:    23283712 kB
+DirectMap1G:     3145728 kB"
+}
+
 /// 在执行系统调用前初始化文件系统
 ///
 /// 包括建立软连接，提前准备好一系列的文件与文件夹
@@ -40,7 +98,7 @@ pub fn fs_init() {
     );
 
     // 接下来对 busybox 相关的指令建立软链接
-    let busybox_arch = ["ls", "mkdir", "touch", "mv", "busybox", "sh", "which"];
+    let busybox_arch = ["ls", "mkdir", "touch", "mv", "busybox", "sh", "which", "cp"];
     for arch in busybox_arch {
         let src_path = "/usr/sbin/".to_string() + arch;
         create_link(
@@ -69,7 +127,7 @@ pub fn fs_init() {
 
     #[cfg(target_arch = "x86_64")]
     {
-        let libc_zlm = &"/lib64/ld-linux-x86-64.so.2";
+        let libc_zlm = &"/lib/ld-linux-x86-64.so.2";
         create_link(
             &(FilePath::new(libc_zlm).unwrap()),
             &(FilePath::new("ld-linux-x86-64.so.2").unwrap()),
@@ -106,6 +164,8 @@ pub fn fs_init() {
         );
     }
 
+    let file = axfs::api::lookup("proc/meminfo").unwrap();
+    file.write_at(0, meminfo().as_bytes()).unwrap();
     // create the file for the lmbench testcase
     let _ = new_file("/lat_sig", &(FileFlags::CREATE | FileFlags::RDWR));
 
