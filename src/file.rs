@@ -61,6 +61,11 @@ DirectMap2M:    23283712 kB
 DirectMap1G:     3145728 kB"
 }
 
+// TODO: Implement the real content of overcommit_memory
+fn oominfo() -> &'static str {
+    '0'
+}
+
 /// 在执行系统调用前初始化文件系统
 ///
 /// 包括建立软连接，提前准备好一系列的文件与文件夹
@@ -164,8 +169,10 @@ pub fn fs_init() {
         );
     }
 
-    let file = axfs::api::lookup("proc/meminfo").unwrap();
-    file.write_at(0, meminfo().as_bytes()).unwrap();
+    let mem_file = axfs::api::lookup("/proc/meminfo").unwrap();
+    mem_file.write_at(0, meminfo().as_bytes()).unwrap();
+    let oom_file = axfs::api::lookup("/proc/sys/vm/overcommit_memory").unwrap();
+    oom_file.write_at(0, oominfo().as_bytes()).unwrap();
     // create the file for the lmbench testcase
     let _ = new_file("/lat_sig", &(FileFlags::CREATE | FileFlags::RDWR));
 
