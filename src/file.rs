@@ -63,7 +63,7 @@ DirectMap1G:     3145728 kB"
 
 // TODO: Implement the real content of overcommit_memory
 fn oominfo() -> &'static str {
-    '0'
+    "0"
 }
 
 /// 在执行系统调用前初始化文件系统
