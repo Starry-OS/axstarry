@@ -52,6 +52,8 @@ devfs = []
 
 # Network
 net = ["axfeat/net", "linux_syscall_api/net"]
+ixgbe_net = ["net", "axfeat/driver-ixgbe"]
+e1000_net = ["net", "axfeat/driver-e1000"]
 
 # Logging
 log-level-off = ["axfeat/log-level-off"]
