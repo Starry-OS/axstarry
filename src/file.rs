@@ -1,6 +1,6 @@
 //! Init some files and links in the filesystem for the apps
 
-use alloc::{format, string::ToString};
+use alloc::{format, vec::*, string::ToString};
 use linux_syscall_api::{create_link, new_file, FileFlags, FilePath};
 
 fn meminfo() -> &'static str {
@@ -64,6 +64,13 @@ DirectMap1G:     3145728 kB"
 // TODO: Implement the real content of overcommit_memory
 fn oominfo() -> &'static str {
     "0"
+}
+
+fn get_status_info(task: &axtask::CurrentTask) -> Vec<u8> {
+    let name = task.name().as_bytes();
+    let id = task.id().as_u64().to_string();
+    let status_vec = [name, b"\n", id.as_bytes(), b"\n256\n"].concat();
+    status_vec
 }
 
 /// 在执行系统调用前初始化文件系统
@@ -173,6 +180,13 @@ pub fn fs_init() {
     mem_file.write_at(0, meminfo().as_bytes()).unwrap();
     let oom_file = axfs::api::lookup("/proc/sys/vm/overcommit_memory").unwrap();
     oom_file.write_at(0, oominfo().as_bytes()).unwrap();
+    let fs_file = axfs::api::lookup("/proc/filesystems").unwrap();
+    fs_file.write_at(0, b"fat32\next4\n").unwrap();
+
+    let status_file = axfs::api::lookup("/proc/self/status").unwrap();
+    let status_info: &[u8] = &get_status_info(&axtask::current());
+    status_file.write_at(0, status_info).unwrap();
+
     // create the file for the lmbench testcase
     let _ = new_file("/lat_sig", &(FileFlags::CREATE | FileFlags::RDWR));
 
