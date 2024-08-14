@@ -68,4 +68,5 @@ linux_syscall_api = { git = "https://github.com/Starry-OS/linux_syscall_api.git"
 axfeat = { git = "https://github.com/Starry-OS/axfeat.git" }
 axlog = { git = "https://github.com/Starry-OS/axlog.git" }
 arch_boot = { git = "https://github.com/Starry-OS/arch_boot.git" }
+axtask = { git = "https://github.com/Starry-OS/axtask.git" }
 axfs = { git = "https://github.com/Starry-OS/axfs.git" }
