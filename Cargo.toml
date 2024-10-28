@@ -47,6 +47,7 @@ fs = ["axfeat/fs"]
 fatfs = ["axfeat/fatfs"]
 lwext4_rust = ["axfeat/lwext4_rust"]
 ext4_rs = ["axfeat/ext4_rs"]
+another_ext4 = ["axfeat/another_ext4"]
 myfs = ["axfeat/myfs"]
 devfs = []
 
