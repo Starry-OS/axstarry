@@ -17,6 +17,8 @@ alloc = ["axfeat/alloc"]
 
 img = ["axfeat/img"]
 
+ramdisk = ["axfeat/driver-ramdisk"]
+
 # Multicore
 smp = ["axfeat/smp", "arch_boot/smp"]
 
